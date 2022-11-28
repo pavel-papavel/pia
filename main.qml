@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.VirtualKeyboard 2.15
+import Core 1.0
 
 Window {
     id: window
@@ -8,6 +9,10 @@ Window {
     height: 480
     visible: true
     title: qsTr("Hello World")
+
+    Core {
+        id: core
+    }
 
     InputPanel {
         id: inputPanel
