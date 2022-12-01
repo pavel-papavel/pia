@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qml/DebugWnd/DebugWindow.qml</file>
+        <file>qml/Components/LineComponent.qml</file>
     </qresource>
 </RCC>
