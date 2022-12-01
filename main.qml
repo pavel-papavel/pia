@@ -1,45 +1,41 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-import QtQuick.VirtualKeyboard 2.15
+import QtQuick.Controls
+import "qml/DebugWnd"
 import Core 1.0
 
 Window {
+    property int paddingWidthMain: 0
+    property int paddingHeightMain: 0
+
     id: window
     width: 640
     height: 480
     visible: true
-    title: qsTr("Hello World")
-
-    Core {
-        id: core
+    title: qsTr("View window")
+    Component.onCompleted: {
+         winld.active = true
     }
-
-    InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: window.height
-        width: window.width
-
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: window.height - inputPanel.height
+    Loader {
+        id: winld
+        active: false
+        sourceComponent: DebugWindow {
+            onPaddingWidthChanged: {
+                paddingWidthMain = paddingWidth
+            }
+            onPaddingHeightChanged: {
+                paddingHeightMain = paddingHeight
             }
         }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
-                }
-            }
+    }
+    Column
+    {
+        spacing: 10
+        Text {
+            text: paddingWidthMain
+        }
+        Text {
+            text: paddingHeightMain
         }
     }
 }

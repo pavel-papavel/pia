@@ -1,11 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickWindow>
 #include "src/Main/core.h"
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
-
     if (qEnvironmentVariableIsEmpty("QTGLESSTREAM_DISPLAY")) {
         qputenv("QT_QPA_EGLFS_PHYSICAL_WIDTH", QByteArray("213"));
         qputenv("QT_QPA_EGLFS_PHYSICAL_HEIGHT", QByteArray("120"));
