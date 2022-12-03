@@ -9,8 +9,12 @@ class Core : public QObject
 public:
     explicit Core(QObject *parent = nullptr);
 
+Q_INVOKABLE
+    bool getMultipleDisplayMode() const;
 signals:
 
+private:
+    bool _multipleDisplayMode = false;
 };
 
 #endif // CORE_H

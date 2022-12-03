@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QQmlContext>
+#include <QDebug>
 #include "src/Main/core.h"
 #include "src/Managers/savemanager.h"
 

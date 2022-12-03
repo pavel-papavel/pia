@@ -10,6 +10,9 @@ import Core 1.0
 Window {
     id: window
 
+    property bool multipleDisplayMode: core.getMultipleDisplayMode()
+    property QtObject currentDisplay: Qt.application.screens[multipleDisplayMode === true ? 1 : 0]
+
     property int paddingFromCenterMain: saveManager.intValue("paddingFromCenter", "[saveManager] Ошибка чтения данных")
     property string sourceImgMain: saveManager.stringValue("sourceImage", "[saveManager] Ошибка чтения данных")
     property int centerBoxSize: saveManager.intValue("centerBoxSize", "[saveManager] Ошибка чтения данных")
@@ -22,13 +25,17 @@ Window {
     visible: true
     title: qsTr("View window")
     color: "black"
-    visibility: "FullScreen"
-    screen: Qt.application.screens[1]
+    visibility: multipleDisplayMode === true ? "FullScreen" : "Windowed"
+    screen: currentDisplay
     x: screen.virtualX
     y: screen.virtualY
     Component.onCompleted: {
          winld.active = true
-        console.log(Qt.application.screens[0])
+        console.log(screen.width)
+    }
+
+    Core {
+        id: core
     }
 
     Loader {
@@ -73,60 +80,71 @@ Window {
         }
     }
 
-    LineComponent {
-        anchors.fill: parent
-        visible: window.lineEnabled
-    }
-
-    Rectangle {
-        id: centerBox
-        width: 50 + centerBoxSize
+    Item {
+        id: viewItem
+        width: Math.min(window.currentDisplay.width, window.currentDisplay.height)
         height: width
-        color: "white"
-        visible: window.boxEnabled
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-    }
+        LineComponent {
+            anchors.fill: parent
+            visible: window.lineEnabled
+        }
 
-    // верхняя
-    Image {
-        source: window.sourceImgMain
-        width: 100 + window.imageSize
-        fillMode: Image.PreserveAspectFit
-        rotation: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: centerBox.top
-        anchors.bottomMargin: paddingFromCenterMain
-    }
+        Rectangle {
+            id: centerBox
+            width: 50 + centerBoxSize
+            height: width
+            color: "white"
+            visible: window.boxEnabled
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 
-    //нижняя
-    Image {
-        source: window.sourceImgMain
-        width: 100 + window.imageSize
-        fillMode: Image.PreserveAspectFit
-        rotation: 180
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: centerBox.bottom
-        anchors.topMargin: paddingFromCenterMain
-    }
-    // правая
-    Image {
-        source: window.sourceImgMain
-        width: 100 + window.imageSize
-        fillMode: Image.PreserveAspectFit
-        rotation: -90
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: centerBox.left
-        anchors.rightMargin: paddingFromCenterMain
-    }
-    // левая
-    Image {
-        source: window.sourceImgMain
-        width: 100 + window.imageSize
-        fillMode: Image.PreserveAspectFit
-        rotation: 90
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: centerBox.right
-        anchors.leftMargin: paddingFromCenterMain
+        // верхняя
+        Image {
+            source: window.sourceImgMain
+            width: 200
+            height: 200
+            fillMode: Image.PreserveAspectFit
+            rotation: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: centerBox.top
+            anchors.bottomMargin: paddingFromCenterMain
+        }
+
+        //нижняя
+        Image {
+            source: window.sourceImgMain
+            width: 200
+            height: 200
+            fillMode: Image.PreserveAspectFit
+            rotation: 180
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: centerBox.bottom
+            anchors.topMargin: paddingFromCenterMain
+        }
+        // правая
+        Image {
+            source: window.sourceImgMain
+            width: 200
+            height: 200
+            fillMode: Image.PreserveAspectFit
+            rotation: -90
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: centerBox.left
+            anchors.rightMargin: paddingFromCenterMain
+        }
+        // левая
+        Image {
+            source: window.sourceImgMain
+            width: 200
+            height: 200
+            fillMode: Image.PreserveAspectFit
+            rotation: 90
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: centerBox.right
+            anchors.leftMargin: paddingFromCenterMain
+        }
     }
 }

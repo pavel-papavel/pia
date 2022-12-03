@@ -44,7 +44,7 @@ Item {
                     id: sliderCenter
                     value: paddingFromCenter
                     from: 0
-                    to: 100
+                    to: 500
                 }
             }
             Row {
@@ -55,7 +55,7 @@ Item {
                 Slider {
                     id: sliderCenterSize
                     from: 0
-                    to: 100
+                    to: 500
                 }
             }
             CheckBox {
@@ -76,7 +76,7 @@ Item {
                 Slider {
                     id: sliderImageSize
                     from: 0
-                    to: 100
+                    to: 500
                 }
             }
             Row {
