@@ -22,8 +22,13 @@ Window {
     visible: true
     title: qsTr("View window")
     color: "black"
+    visibility: "FullScreen"
+    screen: Qt.application.screens[1]
+    x: screen.virtualX
+    y: screen.virtualY
     Component.onCompleted: {
          winld.active = true
+        console.log(Qt.application.screens[0])
     }
 
     Loader {

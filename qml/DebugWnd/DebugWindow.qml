@@ -26,6 +26,9 @@ Item {
         width: 300
         height: 300
         visible: true
+        screen: Qt.application.screens[0]
+        x: screen.virtualX
+        y: screen.virtualY
         Column {
             width: parent.width / 2
             anchors.top: parent.top
