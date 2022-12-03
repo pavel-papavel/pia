@@ -6,11 +6,20 @@ Item {
     id: root
 
     property int paddingFromCenter: sliderCenter.value
-    property string sourceImage: "file:///C:/Users/pasha/Documents/ProjectImage/cat1.png"
+    property string sourceImage: ""
     property int centerBoxSize: sliderCenterSize.value
     property int imageSize: sliderImageSize.value
     property bool lineEnabled: checkBoxLineEnabled.checked
     property bool boxEnabled: checkBoxBoxEnabled.checked
+
+    function setValues(centerBoxPadding, centerBoxSize, imageSize, lineEnabled, boxEnabled)
+    {
+        sliderCenter.value = centerBoxPadding
+        sliderCenterSize.value = centerBoxSize
+        sliderImageSize.value = imageSize
+        checkBoxBoxEnabled.checked = lineEnabled
+        checkBoxBoxEnabled.checked = boxEnabled
+    }
 
     Window {
         title: qsTr("Debug window")
@@ -30,6 +39,7 @@ Item {
                 }
                 Slider {
                     id: sliderCenter
+                    value: paddingFromCenter
                     from: 0
                     to: 100
                 }
@@ -48,12 +58,12 @@ Item {
             CheckBox {
                 id: checkBoxLineEnabled
                 text: "Включить линии"
-                checked: true
+                checked: lineEnabled
             }
             CheckBox {
                 id: checkBoxBoxEnabled
                 text: "Включить квадрат"
-                checked: true
+                checked: boxEnabled
             }
             Row {
                 spacing: 20

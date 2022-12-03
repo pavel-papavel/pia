@@ -10,12 +10,12 @@ import Core 1.0
 Window {
     id: window
 
-    property int paddingFromCenterMain: 0
-    property string sourceImgMain: "file:///C:/Users/pasha/Documents/ProjectImage/cat1.png"
-    property int centerBoxSize: 0
-    property int imageSize: 0
-    property bool lineEnabled: true
-    property bool boxEnabled: true
+    property int paddingFromCenterMain: saveManager.intValue("paddingFromCenter", "[saveManager] Ошибка чтения данных")
+    property string sourceImgMain: saveManager.stringValue("sourceImage", "[saveManager] Ошибка чтения данных")
+    property int centerBoxSize: saveManager.intValue("centerBoxSize", "[saveManager] Ошибка чтения данных")
+    property int imageSize: saveManager.intValue("imageSize", "[saveManager] Ошибка чтения данных")
+    property bool lineEnabled: saveManager.boolValue("lineEnabled", "[saveManager] Ошибка чтения данных")
+    property bool boxEnabled: saveManager.boolValue("boxEnabled", "[saveManager] Ошибка чтения данных")
 
     width: 600
     height: 600
@@ -25,29 +25,46 @@ Window {
     Component.onCompleted: {
          winld.active = true
     }
+
     Loader {
         id: winld
         active: false
         sourceComponent: DebugWindow {
+
             onPaddingFromCenterChanged: {
-                paddingFromCenterMain = paddingFromCenter
+                window.paddingFromCenterMain = paddingFromCenter
+                saveManager.setValue("paddingFromCenter", paddingFromCenter)
             }
             onSourceImageChanged: {
                 window.sourceImgMain = sourceImage
+                saveManager.setValue("sourceImage", sourceImage)
             }
             onCenterBoxSizeChanged:
             {
                 window.centerBoxSize = centerBoxSize
+                saveManager.setValue("centerBoxSize", centerBoxSize)
             }
             onImageSizeChanged: {
                 window.imageSize = imageSize
+                saveManager.setValue("imageSize", imageSize)
             }
             onLineEnabledChanged: {
                 window.lineEnabled = lineEnabled
+                saveManager.setValue("lineEnabled", lineEnabled)
             }
             onBoxEnabledChanged: {
                 window.boxEnabled = boxEnabled
+                saveManager.setValue("boxEnabled", boxEnabled)
             }
+        }
+        onLoaded: {
+            var paddingFromCenter = saveManager.intValue("paddingFromCenter", "[saveManager] Ошибка чтения данных")
+            //var sourceImgMain = saveManager.value("sourceImage", "[saveManager] Ошибка чтения данных")
+            var centerBoxSize = saveManager.intValue("centerBoxSize", "[saveManager] Ошибка чтения данных")
+            var imageSize = saveManager.intValue("imageSize", "[saveManager] Ошибка чтения данных")
+            var lineEnabled = saveManager.boolValue("lineEnabled", "[saveManager] Ошибка чтения данных")
+            var boxEnabled = saveManager.boolValue("boxEnabled", "[saveManager] Ошибка чтения данных")
+            item.setValues(paddingFromCenter, centerBoxSize, imageSize, lineEnabled, boxEnabled)
         }
     }
 

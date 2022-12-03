@@ -6,7 +6,8 @@ QT += quick
 
 SOURCES += \
         main.cpp \
-        src/Main/core.cpp
+        src/Main/core.cpp \
+        src/Managers/savemanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,4 +23,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    src/Main/core.h
+    src/Main/core.h \
+    src/Managers/savemanager.h

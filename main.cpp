@@ -1,7 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
+#include <QQmlContext>
 #include "src/Main/core.h"
+#include "src/Managers/savemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +18,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    SaveManager *saveManager = new SaveManager();
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     qmlRegisterType<Core>("Core", 1, 0, "Core");
+
+    engine.rootContext()->setContextProperty("saveManager", saveManager);
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

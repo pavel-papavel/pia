@@ -23,7 +23,6 @@ Item {
             ctx2.beginPath()
             ctx2.moveTo(window.width,0)
             ctx2.lineTo(centerBox.x + centerBox.width,centerBox.y)
-            console.log()
             ctx2.stroke()
         }
     }
@@ -36,7 +35,6 @@ Item {
             ctx3.beginPath()
             ctx3.moveTo(window.width,window.height)
             ctx3.lineTo(centerBox.x + centerBox.width,centerBox.y + centerBox.height)
-            console.log()
             ctx3.stroke()
         }
     }
@@ -49,7 +47,6 @@ Item {
             ctx4.beginPath()
             ctx4.moveTo(0,window.height)
             ctx4.lineTo(centerBox.x,centerBox.y + centerBox.height)
-            console.log()
             ctx4.stroke()
         }
     }
