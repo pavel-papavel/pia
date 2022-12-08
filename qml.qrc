@@ -3,5 +3,9 @@
         <file>main.qml</file>
         <file>qml/DebugWnd/DebugWindow.qml</file>
         <file>qml/Components/LineComponent.qml</file>
+        <file>qml/Model/Node12.qml</file>
+        <file>qml/Components/PIAImageComponent.qml</file>
+        <file>qml/Components/PIA3DComponent.qml</file>
+        <file>qml/DebugWnd/Debug3DWindow.qml</file>
     </qresource>
 </RCC>

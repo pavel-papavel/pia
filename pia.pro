@@ -25,3 +25,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     src/Main/core.h \
     src/Managers/savemanager.h
+
+DISTFILES += \
+    qml/Model/Node12.qml
