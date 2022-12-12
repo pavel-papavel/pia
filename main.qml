@@ -28,6 +28,7 @@ Window {
     property bool boxEnabled3D: saveManager.boolValue("boxEnabled3D", "[saveManager] Ошибка чтения данных")
     property int viewSize3D: saveManager.intValue("viewSize3D", "[saveManager] Ошибка чтения данных")
     property int modelSize3D: saveManager.intValue("modelSize3D", "[saveManager] Ошибка чтения данных")
+    property bool stopRotate3D: false
 
     width: 600
     height: 600
@@ -167,6 +168,9 @@ Window {
                 onModelSizeChanged: {
                     window.modelSize3D = modelSize
                     saveManager.setValue("modelSize3D", modelSize)
+                }
+                onStopRotateChanged: {
+                    window.stopRotate3D = stopRotate
                 }
             }
         }

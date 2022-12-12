@@ -83,4 +83,13 @@ Node {
             ]
         }
     }
+    SequentialAnimation {
+        running: true
+        loops: Animation.Infinite
+        NumberAnimation { target: lP_Bake_LP_Part_03; property: "y"; to: 7; duration: 1000 }
+        NumberAnimation { target: lP_Bake_LP_Part_02; property: "x"; to: -3; duration: 500 }
+        NumberAnimation { target: lP_Bake_LP_Part_02; property: "x"; to: 0; duration: 200 }
+        NumberAnimation { target: lP_Bake_LP_Part_03; property: "y"; to: 0; duration: 1000 }
+
+    }
 }

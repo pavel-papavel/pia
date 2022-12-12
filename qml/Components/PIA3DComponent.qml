@@ -42,6 +42,7 @@ Rectangle {
                 duration: 5000
                 to: 0
                 from: -360
+                running: window.stopRotate3D
             }
         }
 
@@ -76,7 +77,7 @@ Rectangle {
             width: 100 + window.viewSize3D
             height: width
             importScene: stand_alone_scene
-            camera: camera_orthographic_front
+            camera: camera_orthographic_top
         }
 
         View3D {
@@ -86,7 +87,8 @@ Rectangle {
             width: 100 + window.viewSize3D
             height: width
             importScene: stand_alone_scene
-            camera: camera_orthographic_top
+            camera: camera_orthographic_left
+            rotation: 180
         }
 
         View3D {
@@ -96,7 +98,7 @@ Rectangle {
             width: 100 + window.viewSize3D
             height: width
             importScene: stand_alone_scene
-            camera: camera_orthographic_left
+            camera: camera_orthographic_front
             rotation: -90
         }
 

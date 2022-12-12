@@ -11,12 +11,17 @@ Item {
     property bool boxEnabled: cbBoxEnabled.checked
     property int viewSize: sliderViewSize.value
     property int modelSize: sliderModelSize.value
+    property bool stopRotate: false
 
-
-    function setValues(cameraPositionX, cameraPositionY, cameraPositionZ,
-                       cameraAngleX, cameraAngleY, cameraAngleZ)
+    function setValues(paddingFromCenter3D, centerBoxSize3D, lineEnabled3D,
+                       boxEnabled3D, viewSize3D, modelSize3D)
     {
-
+        sliderCenter.value = paddingFromCenter3D
+        sliderCenterSize.value = centerBoxSize3D
+        cbLineEnabled.checked = lineEnabled3D
+        cbBoxEnabled.checked = boxEnabled3D
+        sliderViewSize.value = viewSize3D
+        sliderModelSize.value = modelSize3D
     }
 
     Window {
@@ -86,6 +91,12 @@ Item {
                     id: sliderModelSize
                     from: 0
                     to: 50
+                }
+            }
+            Button {
+                text: root.stopRotate ? "Продолжить анимацию" : "Остановить анимацию"
+                onClicked: {
+                    root.stopRotate = !root.stopRotate
                 }
             }
         }
