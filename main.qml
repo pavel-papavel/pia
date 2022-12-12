@@ -10,7 +10,7 @@ import Core 1.0
 Window {
     id: window
 
-    property string typeProject: "3d"
+    property string typeProject: "image"
 
     property bool multipleDisplayMode: core.getMultipleDisplayMode()
     property QtObject currentDisplay: Qt.application.screens[multipleDisplayMode === true ? 1 : 0]
@@ -40,49 +40,82 @@ Window {
     x: screen.virtualX
     y: screen.virtualY
     Component.onCompleted: {
-         winld.active = true
-        console.log(screen.width)
+         loaderDbg.active = true
+    }
+
+    function setDbgWindow()
+    {
+
+        if (window.typeProject === "image")
+        {
+            return debugImageWindowComponent
+        }
+        else if (window.typeProject === "3d")
+        {
+            return debug3DWindowComponent
+        }
     }
 
     Core {
         id: core
     }
 
-    Loader {
-        id: winld
-        active: false
-        sourceComponent:
-        {
-            if (window.typeProject === "image")
-            {
-                return debugImageWindowComponent
-            }
-            else if (window.typeProject === "3d")
-            {
-                return debug3DWindowComponent
-            }
-        }
-        onLoaded: {
-            if (window.typeProject === "image")
-            {
-                var paddingFromCenter = saveManager.intValue("paddingFromCenter", "[saveManager] Ошибка чтения данных")
-                var centerBoxSize = saveManager.intValue("centerBoxSize", "[saveManager] Ошибка чтения данных")
-                var imageSize = saveManager.intValue("imageSize", "[saveManager] Ошибка чтения данных")
-                var lineEnabled = saveManager.boolValue("lineEnabled", "[saveManager] Ошибка чтения данных")
-                var boxEnabled = saveManager.boolValue("boxEnabled", "[saveManager] Ошибка чтения данных")
-                item.setValues(paddingFromCenter, centerBoxSize, imageSize, lineEnabled, boxEnabled)
-            }
-            else if (window.typeProject === "3d")
-            {
-                var paddingFromCenter3D = saveManager.intValue("paddingFromCenter3D", "[saveManager] Ошибка чтения данных")
-                var centerBoxSize3D = saveManager.intValue("centerBoxSize3D", "[saveManager] Ошибка чтения данных")
-                var lineEnabled3D = saveManager.boolValue("lineEnabled3D", "[saveManager] Ошибка чтения данных")
-                var boxEnabled3D = saveManager.boolValue("boxEnabled3D", "[saveManager] Ошибка чтения данных")
-                var viewSize3D = saveManager.intValue("viewSize3D", "[saveManager] Ошибка чтения данных")
-                var modelSize3D = saveManager.intValue("modelSize3D", "[saveManager] Ошибка чтения данных")
+    Window {
+        id: windowDbg
+        title: qsTr("Debug 3D window")
+        width: 300
+        height: 300
+        visible: true
+        screen: Qt.application.screens[0]
+        x: screen.virtualX
+        y: screen.virtualY
 
-                item.setValues(paddingFromCenter3D, centerBoxSize3D, lineEnabled3D,
-                               boxEnabled3D, viewSize3D, modelSize3D)
+        Column {
+            anchors.fill: parent
+            spacing: 5
+            ComboBox {
+                id: cbType
+                model: ["image", "3d", "watch"]
+                onActivated: {
+                    if (currentIndex === 0)
+                    {
+                        window.typeProject = "image"
+                    }
+                    else if (currentIndex === 1)
+                    {
+                        window.typeProject = "3d"
+                    }
+                }
+            }
+            Loader {
+                id: loaderDbg
+                active: false
+                height: parent.height
+                width: parent.width
+                sourceComponent: setDbgWindow ()
+                onLoaded: {
+                    if (window.typeProject === "image")
+                    {
+                        var paddingFromCenter = saveManager.intValue("paddingFromCenter", "[saveManager] Ошибка чтения данных")
+                        var centerBoxSize = saveManager.intValue("centerBoxSize", "[saveManager] Ошибка чтения данных")
+                        var imageSize = saveManager.intValue("imageSize", "[saveManager] Ошибка чтения данных")
+                        var lineEnabled = saveManager.boolValue("lineEnabled", "[saveManager] Ошибка чтения данных")
+                        var boxEnabled = saveManager.boolValue("boxEnabled", "[saveManager] Ошибка чтения данных")
+                        item.setValues(paddingFromCenter, centerBoxSize, imageSize, lineEnabled, boxEnabled)
+                    }
+                    else if (window.typeProject === "3d")
+                    {
+                        var paddingFromCenter3D = saveManager.intValue("paddingFromCenter3D", "[saveManager] Ошибка чтения данных")
+                        var centerBoxSize3D = saveManager.intValue("centerBoxSize3D", "[saveManager] Ошибка чтения данных")
+                        var lineEnabled3D = saveManager.boolValue("lineEnabled3D", "[saveManager] Ошибка чтения данных")
+                        var boxEnabled3D = saveManager.boolValue("boxEnabled3D", "[saveManager] Ошибка чтения данных")
+                        var viewSize3D = saveManager.intValue("viewSize3D", "[saveManager] Ошибка чтения данных")
+                        var modelSize3D = saveManager.intValue("modelSize3D", "[saveManager] Ошибка чтения данных")
+
+                        item.setValues(paddingFromCenter3D, centerBoxSize3D, lineEnabled3D,
+                                       boxEnabled3D, viewSize3D, modelSize3D)
+                    }
+                }
             }
         }
     }
@@ -110,7 +143,6 @@ Window {
 
         Component {
             id: debugImageWindowComponent
-
             DebugWindow {
                 onPaddingFromCenterChanged: {
                     window.paddingFromCenterMain = paddingFromCenter

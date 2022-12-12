@@ -4,7 +4,7 @@ import QtQuick.Dialogs
 
 Item {
     id: root
-
+    //anchors.fill: parent
     property int paddingFromCenter: sliderCenter.value
     property string sourceImage: ""
     property int centerBoxSize: sliderCenterSize.value
@@ -21,82 +21,73 @@ Item {
         checkBoxBoxEnabled.checked = boxEnabled
     }
 
-    Window {
-        title: qsTr("Debug window")
-        width: 300
-        height: 300
-        visible: true
-        screen: Qt.application.screens[0]
-        x: screen.virtualX
-        y: screen.virtualY
-        Column {
-            width: parent.width / 2
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
+    Column {
+        width: parent.width / 2
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        spacing: 20
+        Row {
             spacing: 20
-            Row {
-                spacing: 20
-                Text {
-                    text: "Отступ от центра"
-                }
-                Slider {
-                    id: sliderCenter
-                    value: paddingFromCenter
-                    from: 0
-                    to: 500
-                }
+            Text {
+                text: "Отступ от центра"
             }
-            Row {
-                spacing: 20
-                Text {
-                    text: "Размер центрального квадрата"
-                }
-                Slider {
-                    id: sliderCenterSize
-                    from: 0
-                    to: 500
-                }
+            Slider {
+                id: sliderCenter
+                value: window.paddingFromCenterMain
+                from: 0
+                to: 500
             }
-            CheckBox {
-                id: checkBoxLineEnabled
-                text: "Включить линии"
-                checked: lineEnabled
+        }
+        Row {
+            spacing: 20
+            Text {
+                text: "Размер центрального квадрата"
             }
-            CheckBox {
-                id: checkBoxBoxEnabled
-                text: "Включить квадрат"
-                checked: boxEnabled
+            Slider {
+                id: sliderCenterSize
+                from: 0
+                to: 500
             }
-            Row {
-                spacing: 20
-                Text {
-                    text: "Размер изображений"
-                }
-                Slider {
-                    id: sliderImageSize
-                    from: 0
-                    to: 500
-                }
+        }
+        CheckBox {
+            id: checkBoxLineEnabled
+            text: "Включить линии"
+            checked: lineEnabled
+        }
+        CheckBox {
+            id: checkBoxBoxEnabled
+            text: "Включить квадрат"
+            checked: boxEnabled
+        }
+        Row {
+            spacing: 20
+            Text {
+                text: "Размер изображений"
             }
-            Row {
-                spacing: 20
+            Slider {
+                id: sliderImageSize
+                from: 0
+                to: 500
+            }
+        }
+        Row {
+            spacing: 20
 
-                Button {
-                    text: "Выбрать изображение"
-                    onClicked: {
-                        fileDialog.open()
-                    }
+            Button {
+                text: "Выбрать изображение"
+                onClicked: {
+                    fileDialog.open()
                 }
+            }
 
-                FileDialog {
-                    id: fileDialog
-                    nameFilters: "*.png"
-                    fileMode: FileDialog.OpenFile
-                    currentFolder: "file:///C:/Users/pasha/Documents/ProjectImage"
-                    onAccepted: {
-                        root.sourceImage = selectedFile
-                    }
+            FileDialog {
+                id: fileDialog
+                nameFilters: "*.png"
+                fileMode: FileDialog.OpenFile
+                currentFolder: "file:///C:/Users/pasha/Documents/ProjectImage"
+                onAccepted: {
+                    root.sourceImage = selectedFile
                 }
             }
         }
